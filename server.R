@@ -4,6 +4,7 @@ server <- function(input, output, session) {
     ## Get annotations
     annots <- get_synapse_table(synID = "syn50711721", syn = syn) 
     # change synID to final table, currently pointing at tester_proj table
+    # 1KD annotation table SynapseID = syn27806892
     annots <- select(annots, -maximumSize)
 
     ## Create table to display
