@@ -1,19 +1,25 @@
 server <- function(input, output, session) {
 
-  # load required libraries
-  library(shiny)
-  library(reactable)
-  library(tidyverse)
+  # # load required libraries
+  # library(shiny)
+  # library(reactable)
+  # library(tidyverse)
+  # 
+  # ## Login into Synapse
+  # synapser::synLogin()
+  # 
+  # ## Get Annotations from Synapse
+  # anno.syn.id <- 'syn50711721'   
+  # # change synID to final table, currently pointing at tester_proj table
+  # # 1KD annotation table SynapseID = syn27806892
+  # annots <- synapser::synTableQuery(paste0('SELECT * FROM ',anno.syn.id))$asDataFrame() %>% 
+  #   dplyr::select(-ROW_ID, -ROW_VERSION, -LeapTerm)
+  syn <- synapse$Synapse()
+  syn$login(email = Sys.getenv('synapse_username'), password = Sys.getenv('synapse_password'))
   
-  ## Login into Synapse
-  synapser::synLogin()
   
-  ## Get Annotations from Synapse
-  anno.syn.id <- 'syn50711721'   
-  # change synID to final table, currently pointing at tester_proj table
-  # 1KD annotation table SynapseID = syn27806892
-  annots <- synapser::synTableQuery(paste0('SELECT * FROM ',anno.syn.id))$asDataFrame() %>% 
-    dplyr::select(-ROW_ID, -ROW_VERSION, -LeapTerm)
+  ## Get annotations
+  annots <- get_synapse_table(synID = "syn50711721", syn = syn)
   
   ## Create table to display
   output$annotations_table <- renderReactable({
