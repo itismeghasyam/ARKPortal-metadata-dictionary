@@ -1,8 +1,8 @@
 ui <- function() {
   fluidPage(
-
+    
     titlePanel("ARK Portal Metadata Dictionary"),
-
+    
     fluidRow(
       column(
         8,
@@ -19,3 +19,4 @@ ui <- function() {
     )
   )
 }
+
