@@ -1,0 +1,36 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/master/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+
+name: shiny-deploy
+
+jobs:
+  shiny-deploy:
+    runs-on: ubuntu-latest
+    env:
+      # Note, this name is referred to in 'global.R'
+      VENV_NAME: virtual_env
+      # This should not be necessary for installing from public repo's however install_github() fails without it.
+      GITHUB_PAT: ${{ secrets.REPO_PAT }}
+ 
+    steps:
+ 
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pip python3.8-venv libcurl4-openssl-dev
+ 
+      - uses: actions/checkout@v2
+
+      - name: Create and Activate Python Virtual Environment
+        shell: bash
+        run: |
+          python3 -m venv "${{ env.VENV_NAME }}"
+          chmod 755 "${{ env.VENV_NAME }}"/bin/activate
+          source "${{ env.VENV_NAME }}"/bin/activate
+        
+      - name: Install Python Dependencies
+        shell: bash
+        run: |
+          source "${{ env.VENV_NAME }}"/bin/activate
+          pip3 install synapseclient
+        
