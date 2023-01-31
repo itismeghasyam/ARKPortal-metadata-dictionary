@@ -33,4 +33,3 @@ jobs:
         run: |
           source "${{ env.VENV_NAME }}"/bin/activate
           pip3 install synapseclient
-        
