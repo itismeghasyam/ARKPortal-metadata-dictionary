@@ -3,6 +3,11 @@
 
 name: shiny-deploy
 
+on:
+  push:
+    branches:
+      - main
+      - develop*
 jobs:
   shiny-deploy:
     runs-on: ubuntu-latest
